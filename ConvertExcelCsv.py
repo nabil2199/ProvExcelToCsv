@@ -69,9 +69,24 @@ def loadVoicePolicy():
     voicepolicylist = loadColumn("M")
     return voicepolicylist
 
+#def loadTactical():
+#    tacticallist = loadColumn("S")
+#    return tacticallist
+
 def loadTactical():
-    tacticallist = loadColumn("S")
-    return tacticallist
+    valuelist = []
+    i=1
+    while (i < sheetsize):
+        cellcoordinate='S' + str(i)
+        cell = sheet[cellcoordinate]
+        if cell.value == 'Y':
+            valuelist.insert(i,'True')
+        elif cell.value == 'N':
+            valuelist.insert(i, 'False')
+        else :
+            valuelist.insert(i,cell.value)
+        i=i+1
+    return valuelist
 
 def loadVoiceMail():
     voicemaillist = loadColumn("V")
@@ -99,7 +114,12 @@ desklist = loadDesk()
 displaynumberlist = loadDisplayNumber()
 
 for i in range(1,sheetsize-1):
-    if bupnlist[i] != None and bupnlist[i] != 0:
+    if bupnlist[i] != None and bupnlist[i] != 0 and desklist[i] == None:
+        line = str(bupnlist[i]) + ',' + str(fnamelist[i]) + ',' + str(lnamelist[i]) + ',' + str(siplist[i]) + ',' + str(emaillist[i]) + ',' + str(telurilist[i]) + ',' + str(extensionlist[i]) + ',' + str(voicepolicylist[i]) + ',' + str(tacticallist[i]) + ',' + str(voicemaillist[i]) + ',' +  ',' + str(displaynumberlist[i] + '\n')
+        csvfile.write(line)
+        print(i)
+        print(line)
+    elif bupnlist[i] != None and bupnlist[i] != 0 and desklist[i] != None:
         line = str(bupnlist[i]) + ',' + str(fnamelist[i]) + ',' + str(lnamelist[i]) + ',' + str(siplist[i]) + ',' + str(emaillist[i]) + ',' + str(telurilist[i]) + ',' + str(extensionlist[i]) + ',' + str(voicepolicylist[i]) + ',' + str(tacticallist[i]) + ',' + str(voicemaillist[i]) + ',' + str(desklist[i]) + ',' + str(displaynumberlist[i] + '\n')
         csvfile.write(line)
         print(i)
